@@ -24,9 +24,11 @@ public class Battle {
             final Warrior defendingWarrior = defendingArmy.getFrontier().getWarrior();
             List<Warrior> attackerTargets = attackingWarrior.selectTarget(defendingArmy);
             attackingWarrior.hit(attackerTargets);
+            attackingArmy.healAll();
             if (defendingWarrior.isAlive()) {
                 List<Warrior> defenderTargets = defendingWarrior.selectTarget(attackingArmy);
                 defendingWarrior.hit(defenderTargets);
+                defendingArmy.healAll();
             }
         }
         return attackingArmy.isAlive();

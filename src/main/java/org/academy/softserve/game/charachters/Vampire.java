@@ -24,4 +24,9 @@ public class Vampire extends Warrior {
     public int getAttack() {
         return ATTACK;
     }
+
+    @Override
+    protected int getMaxHealth() {
+        return VAMPIRE_HEALTH;
+    }
 }

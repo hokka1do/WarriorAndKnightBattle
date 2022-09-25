@@ -52,4 +52,8 @@ public class Warrior {
     protected void setHealth(int health) {
         this.health = health;
     }
+
+    protected int getMaxHealth() {
+        return WARRIOR_HEALTH;
+    }
 }

@@ -1,11 +1,13 @@
 package org.academy.softserve.game.charachters;
 
 public class Defender extends Warrior {
+    private static final int DEFENDER_HEALTH = 60;
     private static final int DEFENSE = 2;
     private static final int ATTACK = 3;
 
+
     public Defender() {
-        super(60);
+        super(DEFENDER_HEALTH);
     }
 
     protected int getDefense() {
@@ -21,5 +23,10 @@ public class Defender extends Warrior {
     @Override
     public int getAttack() {
         return ATTACK;
+    }
+
+    @Override
+    protected int getMaxHealth() {
+        return DEFENDER_HEALTH;
     }
 }

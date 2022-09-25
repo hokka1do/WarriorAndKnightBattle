@@ -21,7 +21,7 @@ public class Army {
     }
 
     public boolean isAlive() {
-        if (firstArmyUnit == null && lastArmyUnit == null){
+        if (firstArmyUnit == null && lastArmyUnit == null) {
             return false;
         }
         return getFrontier() != null;
@@ -30,11 +30,28 @@ public class Army {
     public ArmyUnit<Warrior> getFrontier() {
         ArmyUnit<Warrior> currentArmyUnit = this.firstArmyUnit;
         do {
-            if (currentArmyUnit != null && currentArmyUnit.getWarrior() != null && currentArmyUnit.getWarrior().isAlive()) {
+            if (isAlive(currentArmyUnit)) {
                 return currentArmyUnit;
-            } else
+            } else {
                 currentArmyUnit = currentArmyUnit.getNext();
+            }
         } while (currentArmyUnit != null);
         return null;
+    }
+
+    private boolean isAlive(ArmyUnit<Warrior> currentArmyUnit) {
+        return currentArmyUnit != null &&
+                currentArmyUnit.getWarrior() != null &&
+                currentArmyUnit.getWarrior().isAlive();
+    }
+
+    public void healAll() {
+        ArmyUnit<Warrior> currentArmyUnit = this.firstArmyUnit;
+        do {
+            if (isAlive(currentArmyUnit) && currentArmyUnit.getWarrior() instanceof Heal) {
+                ((Heal) currentArmyUnit.getWarrior()).heal(currentArmyUnit.getPrevious().getWarrior());
+            }
+            currentArmyUnit = currentArmyUnit.getNext();
+        } while (currentArmyUnit != null);
     }
 }
