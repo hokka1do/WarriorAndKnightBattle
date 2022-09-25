@@ -1,4 +1,4 @@
-package org.academy.softserve.battle;
+package org.academy.softserve.game;
 
 public class Main {
     public static void main(String[] args) {
