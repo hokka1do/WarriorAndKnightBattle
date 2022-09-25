@@ -20,6 +20,10 @@ public class Warrior {
         return getHealth() > 0;
     }
 
+    public boolean isDead() {
+        return !isAlive();
+    }
+
     public void hit(Warrior otherWarrior) {
         otherWarrior.receiveDamage(getAttack());
     }

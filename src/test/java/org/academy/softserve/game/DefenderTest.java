@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefenderTest extends Battle {
+class DefenderTest {
+    
+    private final Battle battle = new Battle();
 
     @DisplayName("1.Defender test battle")
     @Test
@@ -24,11 +26,11 @@ class DefenderTest extends Battle {
         var rog = new Warrior();
         var lancelot = new Defender();
 
-        var fight1 = Battle.fight(chuck, bruce);
-        var fight2 = Battle.fight(carl, dave);
-        var fight3 = Battle.fight(bob, mark);
-        var fight4 = Battle.fight(mike, rog);
-        var fight5 = Battle.fight(rog, lancelot);
+        var fight1 = battle.fight(chuck, bruce);
+        var fight2 = battle.fight(carl, dave);
+        var fight3 = battle.fight(bob, mark);
+        var fight4 = battle.fight(mike, rog);
+        var fight5 = battle.fight(rog, lancelot);
 
         assertAll(
                 () -> assertTrue(fight1, "Chuck should win"),
@@ -60,16 +62,16 @@ class DefenderTest extends Battle {
         var rog = new Warrior();
         var lancelot = new Defender();
 
-        var fight1 = Battle.fight(chuck, bruce);
-        var fight2 = Battle.fight(carl, dave);
-        var fight3 = Battle.fight(bob, mark);
+        var fight1 = battle.fight(chuck, bruce);
+        var fight2 = battle.fight(carl, dave);
+        var fight3 = battle.fight(bob, mark);
         var defenderHealthAfterBattle1 = bob.getHealth();
-        var fight4 = Battle.fight(bob, bruce);
+        var fight4 = battle.fight(bob, bruce);
         var defenderHealthAfterBattle2 = bob.getHealth();
-        var fight5 = Battle.fight(bob, mark);
+        var fight5 = battle.fight(bob, mark);
         var defenderHealthAfterBattle3 = bob.getHealth();
-        var fight6 = Battle.fight(mike, rog);
-        var fight7 = Battle.fight(rog, lancelot);
+        var fight6 = battle.fight(mike, rog);
+        var fight7 = battle.fight(rog, lancelot);
 
         assertFalse(fight1, "Chuck should win");
         assertTrue(fight2, "Carl should Win");

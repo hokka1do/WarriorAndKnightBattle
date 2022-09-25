@@ -7,55 +7,61 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BattleTest extends Battle {
+class BattleTest {
+
+    private final Battle battle = new Battle();
+
     @Test
-    @DisplayName("testNo1 : Common tests")
-    void testNo1() {
+    void givenBattleWhenKnightVsWarriorThenKnightWins() {
         //Arrange - Given
-        var chuck = new Warrior();
-        var bruce = new Warrior();
         var carl = new Knight();
         var dave = new Warrior();
 
         //Act - When
-        var result = Battle.fight(chuck, bruce);
-        var result2 = Battle.fight(dave, carl);
+        var battleResult = battle.fight(carl, dave);
 
         //Assert - Then
-        assertTrue(result);
-        assertFalse(result2);
-        assertTrue(chuck.isAlive());
-        assertFalse(bruce.isAlive());
-        assertTrue(carl.isAlive());
-        assertFalse(dave.isAlive());
+        assertThatAttackerWonTheBattle(battleResult, carl, dave);
+    }
+
+    @Test
+    void givenBattleWhenWarriorVsWarriorThenAttackerWarriorWins() {
+        //Arrange - Given
+        var chuck = new Warrior();
+        var bruce = new Warrior();
+
+        //Act - When
+        var battleResult = battle.fight(chuck, bruce);
+
+        //Assert - Then
+        assertThatAttackerWonTheBattle(battleResult, chuck, bruce);
     }
 
     @Test
     @DisplayName("testNo2 : warrior-knight")
-    void testNo2() {
+    void givenBattleWhenWarriorVsKnightThenDefendingKnightWins() {
         //Arrange
         var carl = new Warrior();
         var jim = new Knight();
 
         //Act
-        var fight1 = Battle.fight(carl, jim);
+        var battleResult = battle.fight(carl, jim);
 
         //Assert
-        assertFalse(fight1, "Knight should won");
+        assertThatDefenderWonTheBattle(battleResult, carl, jim);
     }
 
     @Test
-    @DisplayName("testNo3 : knight - warrior")
-    void testNo3() {
+    void givenBattleWhenWarriorVsKnightThenAttackingKnightWins() {
         //Arrange
         var ramon = new Knight();
         var slevin = new Warrior();
 
         //Act
-        var fight2 = Battle.fight(ramon, slevin);
+        var battleResult = battle.fight(ramon, slevin);
 
         //Assert
-        assertTrue(fight2, "Knight should won");
+        assertThatAttackerWonTheBattle(battleResult, ramon, slevin);
     }
 
     @Test
@@ -66,7 +72,7 @@ class BattleTest extends Battle {
         var mars = new Warrior();
 
         //Act
-        var fight1 = Battle.fight(bob, mars);
+        var fight1 = battle.fight(bob, mars);
         var resultOfFight = bob.isAlive();
 
         //Assert
@@ -82,7 +88,7 @@ class BattleTest extends Battle {
         var godKiller = new Warrior();
 
         //Act
-        var fight1 = Battle.fight(zeus, godKiller);
+        var fight1 = battle.fight(zeus, godKiller);
 
         //Assert
         assertTrue(fight1, "zeus should win");
@@ -97,7 +103,7 @@ class BattleTest extends Battle {
         var wife = new Warrior();
 
         //Act
-        var fight1 = Battle.fight(husband, wife);
+        var fight1 = battle.fight(husband, wife);
 
         //Assert
         assertTrue(fight1, "wife should loose");
@@ -112,7 +118,7 @@ class BattleTest extends Battle {
         var knight = new Knight();
 
         //Act
-        var fight1 = Battle.fight(dragon, knight);
+        var fight1 = battle.fight(dragon, knight);
         int knightHp = knight.getHealth();
 
 
@@ -134,8 +140,8 @@ class BattleTest extends Battle {
         var unit3 = new Warrior();
 
         //Act
-        var fight1 = Battle.fight(unit1, unit2);
-        var fight2 = Battle.fight(unit2, unit3);
+        var fight1 = battle.fight(unit1, unit2);
+        var fight2 = battle.fight(unit2, unit3);
         int lastWarriorHp = unit3.getHealth();
 
         //Assert
@@ -144,5 +150,17 @@ class BattleTest extends Battle {
                 () -> assertFalse(fight2, "in second fight warrior should finish the damaged knight"),
                 () -> assertEquals(36, lastWarriorHp)
         );
+    }
+
+    private void assertThatAttackerWonTheBattle(boolean battleResult, Warrior attacker, Warrior defender) {
+        assertTrue(battleResult);
+        assertTrue(attacker.isAlive());
+        assertTrue(defender.isDead());
+    }
+
+    private void assertThatDefenderWonTheBattle(boolean battleResult, Warrior attacker, Warrior defender) {
+        assertFalse(battleResult);
+        assertTrue(attacker.isDead());
+        assertTrue(defender.isAlive());
     }
 }

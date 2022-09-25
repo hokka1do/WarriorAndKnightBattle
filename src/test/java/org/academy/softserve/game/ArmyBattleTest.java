@@ -23,7 +23,7 @@ class ArmyBattleTest {
         army1.addUnits(Warrior::new, 10);
         army2.addUnits(Warrior::new, 10);
 
-        assertTrue(Battle.armyFight(army1, army2));
+        assertTrue(battle.armyFight(army1, army2));
     }
 
     @Test
@@ -35,7 +35,7 @@ class ArmyBattleTest {
         army1.addUnits(Warrior::new, 10);
         army2.addUnits(Knight::new, 9);
 
-        assertFalse(Battle.armyFight(army1, army2));
+        assertFalse(battle.armyFight(army1, army2));
     }
 
     @Test
@@ -54,9 +54,9 @@ class ArmyBattleTest {
         var army4 = new Army();
         army4.addUnits(Warrior::new, 30);
 
-        assertTrue(Battle.armyFight(myArmy, enemyArmy));
-        assertFalse(Battle.armyFight(army3, army4));
-        assertTrue(Battle.armyFight(myArmy, army4));
+        assertTrue(battle.armyFight(myArmy, enemyArmy));
+        assertFalse(battle.armyFight(army3, army4));
+        assertTrue(battle.armyFight(myArmy, army4));
     }
 
     @Test
@@ -75,8 +75,8 @@ class ArmyBattleTest {
         var army4 = new Army();
         army4.addUnits(Warrior::new, 2);
 
-        assertFalse(Battle.armyFight(myArmy, enemyArmy));
-        assertTrue(Battle.armyFight(army3, army4));
+        assertFalse(battle.armyFight(myArmy, enemyArmy));
+        assertTrue(battle.armyFight(army3, army4));
     }
 
     @Test
@@ -115,9 +115,9 @@ class ArmyBattleTest {
         var army8 = new Army();
         army8.addUnits(Warrior::new, 5);
 
-        assertTrue(Battle.armyFight(army1, army2));
-        assertTrue(Battle.armyFight(army3, army4));
-        assertTrue(Battle.armyFight(army5, army6));
-        assertFalse(Battle.armyFight(army7, army8));
+        assertTrue(battle.armyFight(army1, army2));
+        assertTrue(battle.armyFight(army3, army4));
+        assertTrue(battle.armyFight(army5, army6));
+        assertFalse(battle.armyFight(army7, army8));
     }
 }
