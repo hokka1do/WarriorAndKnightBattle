@@ -28,8 +28,9 @@ public class Warrior {
         otherWarrior.receiveDamage(getAttack());
     }
 
-    public void receiveDamage(int attack) {
+    public int receiveDamage(int attack) {
         setHealth(getHealth() - attack);
+        return attack;
     }
     //Getters and setters
 

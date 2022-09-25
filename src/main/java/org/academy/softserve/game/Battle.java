@@ -15,7 +15,7 @@ public class Battle {
         return attacker.isAlive();
     }
 
-    public boolean armyFight(Army attackingArmy, Army defendingArmy) {
+    public boolean fight(Army attackingArmy, Army defendingArmy) {
         while (attackingArmy.isNotEmpty() && defendingArmy.isNotEmpty()) {
             final Warrior attackingWarrior = attackingArmy.getWarrior();
             final Warrior defendingWarrior = defendingArmy.getWarrior();
