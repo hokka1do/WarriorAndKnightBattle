@@ -1,5 +1,7 @@
 package org.academy.softserve.game.charachters;
 
+import java.util.List;
+
 public class Vampire extends Warrior {
 
     public static final int VAMPIRE_HEALTH = 40;
@@ -12,8 +14,8 @@ public class Vampire extends Warrior {
     }
 
     @Override
-    public void hit(Warrior otherWarrior) {
-        int inflictedDamage = otherWarrior.receiveDamage(getAttack());
+    public void hit(List<Warrior> otherWarrior) {
+        int inflictedDamage = otherWarrior.get(0).receiveDamage(getAttack());
         int healthRegen = (int) Math.floor(inflictedDamage * VAMPIRISM);
         setHealth(Math.min(VAMPIRE_HEALTH, getHealth() + healthRegen));
     }

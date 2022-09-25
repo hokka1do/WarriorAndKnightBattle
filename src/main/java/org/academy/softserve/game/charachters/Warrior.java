@@ -1,5 +1,8 @@
 package org.academy.softserve.game.charachters;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Warrior {
     //Fields
     private static final int WARRIOR_HEALTH = 50;
@@ -24,8 +27,12 @@ public class Warrior {
         return !isAlive();
     }
 
-    public void hit(Warrior otherWarrior) {
-        otherWarrior.receiveDamage(getAttack());
+    public List<Warrior> selectTarget(Army enemyArmy) {
+        return Collections.singletonList(enemyArmy.getFrontier().getWarrior());
+    }
+
+    public void hit(List<Warrior> targetList) {
+        targetList.get(0).receiveDamage(getAttack());
     }
 
     public int receiveDamage(int attack) {

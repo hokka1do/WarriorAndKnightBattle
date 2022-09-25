@@ -1,28 +1,40 @@
 package org.academy.softserve.game.charachters;
 
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.function.Supplier;
 
 public class Army {
-    Collection<Warrior> armyOfUnits = new LinkedList<>();
+    private ArmyUnit<Warrior> firstArmyUnit;
+    private ArmyUnit<Warrior> lastArmyUnit;
 
     public Army addUnits(Supplier<Warrior> unitSupplier, int quantity) {
         for (int i = 0; i < quantity; i++) {
-            armyOfUnits.add(unitSupplier.get());
+            ArmyUnit<Warrior> conscript = new ArmyUnit<>(unitSupplier.get());
+            if (firstArmyUnit == null) {
+                firstArmyUnit = conscript;
+            } else {
+                this.lastArmyUnit.setNext(conscript);
+                conscript.setPrevious(lastArmyUnit);
+            }
+            lastArmyUnit = conscript;
         }
         return this;
     }
 
-    public boolean isNotEmpty() {
-        return armyOfUnits.iterator().hasNext();
+    public boolean isAlive() {
+        if (firstArmyUnit == null && lastArmyUnit == null){
+            return false;
+        }
+        return getFrontier() != null;
     }
 
-    public Warrior getWarrior() {
-        return armyOfUnits.iterator().next();
-    }
-
-    public void looseArmyUnit(Warrior deadWarrior) {
-        armyOfUnits.remove(deadWarrior);
+    public ArmyUnit<Warrior> getFrontier() {
+        ArmyUnit<Warrior> currentArmyUnit = this.firstArmyUnit;
+        do {
+            if (currentArmyUnit != null && currentArmyUnit.getWarrior() != null && currentArmyUnit.getWarrior().isAlive()) {
+                return currentArmyUnit;
+            } else
+                currentArmyUnit = currentArmyUnit.getNext();
+        } while (currentArmyUnit != null);
+        return null;
     }
 }

@@ -15,7 +15,7 @@ class BattleTest {
     void givenBattleWhenKnightVsWarriorThenKnightWins() {
         //Arrange - Given
         var carl = new Knight();
-        var dave = new Warrior();
+        var dave = givenWarrior();
 
         //Act - When
         var battleResult = battle.fight(carl, dave);
@@ -27,8 +27,8 @@ class BattleTest {
     @Test
     void givenBattleWhenWarriorVsWarriorThenAttackerWarriorWins() {
         //Arrange - Given
-        var chuck = new Warrior();
-        var bruce = new Warrior();
+        var chuck = givenWarrior();
+        var bruce = givenWarrior();
 
         //Act - When
         var battleResult = battle.fight(chuck, bruce);
@@ -41,7 +41,7 @@ class BattleTest {
     @DisplayName("testNo2 : warrior-knight")
     void givenBattleWhenWarriorVsKnightThenDefendingKnightWins() {
         //Arrange
-        var carl = new Warrior();
+        var carl = givenWarrior();
         var jim = new Knight();
 
         //Act
@@ -55,7 +55,7 @@ class BattleTest {
     void givenBattleWhenWarriorVsKnightThenAttackingKnightWins() {
         //Arrange
         var ramon = new Knight();
-        var slevin = new Warrior();
+        var slevin = givenWarrior();
 
         //Act
         var battleResult = battle.fight(ramon, slevin);
@@ -65,19 +65,29 @@ class BattleTest {
     }
 
     @Test
-    @DisplayName("testNo4: warrior-warrior")
-    void testNo4() {
-        //Arrange
-        var bob = new Warrior();
-        var mars = new Warrior();
+    void givenBattleWhenWarriorVsWarriorThenAttackerWins() {
+        //given
+        var bob = givenWarrior();
+        var mars = givenWarrior();
 
-        //Act
+        //when
         var fight1 = battle.fight(bob, mars);
-        var resultOfFight = bob.isAlive();
 
-        //Assert
-        assertTrue(fight1, "bob should win");
-        assertTrue(resultOfFight, "bob should stay alive");
+        //then
+        thenBobWinFight(fight1);
+        thenBobShouldStayAlive(bob);
+    }
+
+    private static Warrior givenWarrior() {
+        return new Warrior();
+    }
+
+    private void thenBobWinFight(boolean fightResult) {
+        assertTrue(fightResult);
+    }
+
+    private static void thenBobShouldStayAlive(Warrior bob) {
+        assertTrue(bob.isAlive());
     }
 
     @Test
@@ -85,7 +95,7 @@ class BattleTest {
     void testNo5() {
         //Arrange
         var zeus = new Knight();
-        var godKiller = new Warrior();
+        var godKiller = givenWarrior();
 
         //Act
         var fight1 = battle.fight(zeus, godKiller);
@@ -99,8 +109,8 @@ class BattleTest {
     @DisplayName("testNo6: warrior-warrior, isAlive?")
     void testNo6() {
         //Arrange
-        var husband = new Warrior();
-        var wife = new Warrior();
+        var husband = givenWarrior();
+        var wife = givenWarrior();
 
         //Act
         var fight1 = battle.fight(husband, wife);
@@ -114,7 +124,7 @@ class BattleTest {
     @DisplayName("testNo7: warrior-warrior, isAlive?")
     void testNo7() {
         //Arrange
-        var dragon = new Warrior();
+        var dragon = givenWarrior();
         var knight = new Knight();
 
         //Act
@@ -135,9 +145,9 @@ class BattleTest {
     @DisplayName("testNo8: warrior-knight-warrior")
     void testNo8() {
         //Arrange
-        var unit1 = new Warrior();
+        var unit1 = givenWarrior();
         var unit2 = new Knight();
-        var unit3 = new Warrior();
+        var unit3 = givenWarrior();
 
         //Act
         var fight1 = battle.fight(unit1, unit2);

@@ -20,8 +20,8 @@ class ArmyBattleTest {
         Army army1 = new Army();
         Army army2 = new Army();
 
-        army1.addUnits(Warrior::new, 10)
-                .addUnits(Warrior::new, 10);
+        army1.addUnits(Warrior::new, 10);
+        army2.addUnits(Warrior::new, 10);
 
         assertTrue(battle.fight(army1, army2));
     }
