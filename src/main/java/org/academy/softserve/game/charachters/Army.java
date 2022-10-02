@@ -12,7 +12,7 @@ public class Army {
             if (firstArmyUnit == null) {
                 firstArmyUnit = conscript;
             } else {
-                this.lastArmyUnit.setNext(conscript);
+                this. lastArmyUnit.setNext(conscript);
                 conscript.setPrevious(lastArmyUnit);
             }
             lastArmyUnit = conscript;
@@ -32,7 +32,7 @@ public class Army {
         do {
             if (isAlive(currentArmyUnit)) {
                 return currentArmyUnit;
-            } else {
+            } else if (currentArmyUnit != null) {
                 currentArmyUnit = currentArmyUnit.getNext();
             }
         } while (currentArmyUnit != null);
@@ -45,13 +45,16 @@ public class Army {
                 currentArmyUnit.getWarrior().isAlive();
     }
 
+
     public void healAll() {
         ArmyUnit<Warrior> currentArmyUnit = this.firstArmyUnit;
         do {
             if (isAlive(currentArmyUnit) && currentArmyUnit.getWarrior() instanceof Heal) {
                 ((Heal) currentArmyUnit.getWarrior()).heal(currentArmyUnit.getPrevious().getWarrior());
             }
-            currentArmyUnit = currentArmyUnit.getNext();
+            if (currentArmyUnit != null) {
+                currentArmyUnit = currentArmyUnit.getNext();
+            }
         } while (currentArmyUnit != null);
     }
 }

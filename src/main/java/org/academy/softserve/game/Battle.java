@@ -1,5 +1,6 @@
 package org.academy.softserve.game;
 
+import org.academy.softserve.game.charachters.ArmyUnit;
 import org.academy.softserve.game.charachters.Warrior;
 import org.academy.softserve.game.charachters.Army;
 
@@ -8,14 +9,14 @@ import java.util.List;
 
 public class Battle {
 
-    public boolean fight(Warrior attacker, Warrior defender) {
-        while (attacker.isAlive() && defender.isAlive()) {
-            attacker.hit(Collections.singletonList(defender));
-            if (defender.isAlive()) {
-                defender.hit(Collections.singletonList(attacker));
+    public boolean fight(Warrior attackingUnit, Warrior defendingUnit) {
+        while (attackingUnit != null && attackingUnit.isAlive() && defendingUnit != null && defendingUnit.isAlive()) {
+            attackingUnit.hit(Collections.singletonList(defendingUnit));
+            if (defendingUnit.isAlive()) {
+                defendingUnit.hit(Collections.singletonList(attackingUnit));
             }
         }
-        return attacker.isAlive();
+        return attackingUnit != null && attackingUnit.isAlive();
     }
 
     public boolean fight(Army attackingArmy, Army defendingArmy) {
@@ -32,5 +33,25 @@ public class Battle {
             }
         }
         return attackingArmy.isAlive();
+    }
+
+    public boolean straightFight(Army attackingArmy, Army defendingArmy) {
+        while (attackingArmy.isAlive() && defendingArmy.isAlive()) {
+            ArmyUnit<Warrior> attackingArmyUnit = attackingArmy.getFrontier();
+            ArmyUnit<Warrior> defendingArmyUnit = defendingArmy.getFrontier();
+            Warrior attackingWarrior = attackingArmy.getFrontier().getWarrior();
+            Warrior defendingWarrior = defendingArmy.getFrontier().getWarrior();
+            duelFight(attackingArmyUnit, defendingArmyUnit, attackingWarrior, defendingWarrior);
+        }
+        return attackingArmy.isAlive();
+    }
+
+    private void duelFight(ArmyUnit<Warrior> attackingArmyUnit, ArmyUnit<Warrior> defendingArmyUnit, Warrior attackingWarrior, Warrior defendingWarrior) {
+        do {
+            fight(attackingWarrior, defendingWarrior);
+            attackingWarrior = attackingArmyUnit.getNextAlive().map(ArmyUnit::getWarrior).orElse(null);
+            defendingWarrior = defendingArmyUnit.getNextAlive().map(ArmyUnit::getWarrior).orElse(null);
+        }
+        while (attackingWarrior != null && defendingWarrior != null);
     }
 }

@@ -12,7 +12,7 @@ public class Lancer extends Warrior {
         ArrayList<Warrior> targets = new ArrayList<>();
         ArmyUnit<Warrior> mainTarget = enemyArmy.getFrontier();
         targets.add(mainTarget.getWarrior());
-        if (mainTarget.getNext() != null){
+        if (mainTarget.getNext() != null) {
             targets.add(mainTarget.getNext().getWarrior());
         }
         return targets;
@@ -29,6 +29,6 @@ public class Lancer extends Warrior {
 
     @Override
     public int getAttack() {
-        return ATTACK;
+        return ATTACK + getBonusAttackFromWeapons();
     }
 }

@@ -1,17 +1,24 @@
 package org.academy.softserve.game.charachters;
 
+import org.academy.softserve.game.weapons.Weapon;
+
 public class Defender extends Warrior {
     private static final int DEFENDER_HEALTH = 60;
-    private static final int DEFENSE = 2;
     private static final int ATTACK = 3;
-
+    private static final int DEFENCE = 2;
 
     public Defender() {
-        super(DEFENDER_HEALTH);
+        super(DEFENDER_HEALTH, ATTACK);
     }
 
     protected int getDefense() {
-        return DEFENSE;
+        return DEFENCE + getBonusDefenceFromWeapons();
+    }
+
+    private int getBonusDefenceFromWeapons() {
+        return weapons.stream()
+                .mapToInt(Weapon::getDefence)
+                .sum();
     }
 
     @Override
@@ -22,11 +29,12 @@ public class Defender extends Warrior {
 
     @Override
     public int getAttack() {
-        return ATTACK;
+        return ATTACK + getBonusAttackFromWeapons();
     }
 
     @Override
     protected int getMaxHealth() {
-        return DEFENDER_HEALTH;
+        return DEFENDER_HEALTH + getBonusHealthFromWeapons();
     }
+
 }

@@ -1,24 +1,28 @@
 package org.academy.softserve.game.charachters;
 
+import org.academy.softserve.game.weapons.Weapon;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Warrior {
+
     //Fields
-    private static final int WARRIOR_HEALTH = 50;
-    private static final int ATTACK = 5;
+    private static final int INITIAL_HEALTH = 50;
+    private static final int INITIAL_ATTACK = 5;
     private int health;
 
+    protected final List<Weapon> weapons = new ArrayList<>();
+
     public Warrior() {
-        this(WARRIOR_HEALTH);
+        weapons.add(new Weapon());
     }
 
-    protected Warrior(int health) {
-        this.health = health;
+    public Warrior(int healerHealth, int attack) {
     }
 
     //Methods
-
     public boolean isAlive() {
         return getHealth() > 0;
     }
@@ -39,10 +43,26 @@ public class Warrior {
         setHealth(getHealth() - attack);
         return attack;
     }
-    //Getters and setters
 
+    public void equipWeapon(Weapon weapon) {
+        weapons.add(weapon);
+    }
+
+    //Getters and setters
     public int getAttack() {
-        return ATTACK;
+        return INITIAL_ATTACK + getBonusAttackFromWeapons();
+    }
+
+    protected int getBonusAttackFromWeapons() {
+        return weapons.stream()
+                .mapToInt(Weapon::getAttack)
+                .sum();
+    }
+
+    protected int getBonusHealthFromWeapons() {
+        return weapons.stream()
+                .mapToInt(Weapon::getHealth)
+                .sum();
     }
 
     public int getHealth() {
@@ -54,6 +74,6 @@ public class Warrior {
     }
 
     protected int getMaxHealth() {
-        return WARRIOR_HEALTH;
+        return INITIAL_HEALTH + getBonusHealthFromWeapons();
     }
 }
